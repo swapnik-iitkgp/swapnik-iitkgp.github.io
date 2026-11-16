@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.788866fc.css",
+    "main.js": "/static/js/main.696d56da.js",
+    "static/media/manrope.ttf": "/static/media/manrope.3e197dc742eb2f7817e1.ttf",
+    "index.html": "/index.html",
+    "main.788866fc.css.map": "/static/css/main.788866fc.css.map",
+    "main.696d56da.js.map": "/static/js/main.696d56da.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.788866fc.css",
+    "static/js/main.696d56da.js"
+  ]
+}

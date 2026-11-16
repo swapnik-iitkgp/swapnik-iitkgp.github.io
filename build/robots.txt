@@ -2,4 +2,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://www.swapnikvarala.in/sitemap.xml
+Sitemap: https://swapnik-iitkgp.github.io/sitemap.xml
