@@ -2,7 +2,7 @@
   "name": "portfolio-website",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://swapnikvarala.in",
+  "homepage": "https://swapnik-iitkgp.github.io",
   "dependencies": {
     "@headlessui/react": "^2.2.0",
     "@react-pdf/renderer": "^3.4.4",
