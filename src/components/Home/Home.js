@@ -3,6 +3,7 @@ import { ArrowDown, FileText, Github, GraduationCap, Linkedin, Mail } from 'luci
 import { ResearchField } from '../../researchVisuals';
 import FourierName from '../FourierName/FourierName';
 import { profile } from '../../data/portfolio';
+import './Home.css';
 
 const Home = () => {
   const [animationsPaused, setAnimationsPaused] = useState(() => !window.matchMedia || window.matchMedia('(prefers-reduced-motion: reduce)').matches);
