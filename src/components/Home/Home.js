@@ -17,8 +17,8 @@ const Home = () => {
   }, []);
 
   return (
-    <section id="home" className="hero" aria-labelledby="hero-heading">
-      <div className="container">
+    <section id="home" className="hero hero-reimagined" aria-labelledby="hero-heading">
+      <div className="container hero-container">
         <div className="hero-grid">
           <div className="hero-copy">
             <FourierName headingId="hero-heading" paused={animationsPaused} />
@@ -28,6 +28,26 @@ const Home = () => {
               <a href="https://www.microsoft.com/en-us/research/group/prose/" target="_blank" rel="noopener noreferrer"><strong>PROSE team</strong></a> on AI research for{' '}
               <strong>Excel Copilot</strong>, focusing on the evaluation and reliability of intelligent agents.
             </p>
+            <div className="hero-socials" role="group" aria-label="Contact and profile links">
+              <a className="button" href={`mailto:${profile.email}`}><Mail size={18} aria-hidden="true" /> Email</a>
+              <a className="button" href={profile.resume} target="_blank" rel="noopener noreferrer"><FileText size={18} aria-hidden="true" /> CV</a>
+              <a className="button" href={profile.scholar} target="_blank" rel="noopener noreferrer"><GraduationCap size={18} aria-hidden="true" /> Google Scholar</a>
+              <a className="button" href={profile.github} target="_blank" rel="noopener noreferrer"><Github size={18} aria-hidden="true" /> GitHub</a>
+              <a className="button" href={profile.linkedin} target="_blank" rel="noopener noreferrer"><Linkedin size={18} aria-hidden="true" /> LinkedIn</a>
+            </div>
+          </div>
+          <div className="hero-art">
+            <figure className="hero-portrait-frame">
+              <img className="hero-portrait" src={profile.portrait} alt={`Illustrated portrait of ${profile.name}`} width="800" height="800" fetchPriority="high" />
+              <figcaption className="hero-portrait-caption">
+                <span>{profile.name}</span>
+                <span>{profile.location}</span>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+        <div className="hero-narrative">
+          <div className="hero-narrative-column">
             <p className="hero-description">
               Previously, I was a Research Engineer at{' '}
               <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-india/" target="_blank" rel="noopener noreferrer"><strong>Microsoft Research India</strong></a>, working on{' '}
@@ -40,6 +60,8 @@ const Home = () => {
               <strong>Sarvam AI, NTU Singapore, and IIT Hyderabad</strong>, and publications in <strong>federated learning</strong> at workshops associated with{' '}
               <strong>IEEE INFOCOM 2025</strong> and <strong>AAAI 2025</strong>.
             </p>
+          </div>
+          <div className="hero-narrative-column">
             <p className="hero-description">
               I graduated from <strong>IIT Kharagpur in 2025</strong> with a B.Tech. (Honours) in Metallurgical &amp; Materials Engineering and a minor in Computer Science &amp; Engineering.
             </p>
@@ -47,21 +69,13 @@ const Home = () => {
               My research interests center on <strong>reinforcement learning, multimodal learning, and agentic systems</strong>, with a growing interest in{' '}
               <strong>frontier model training, optimization, and robot learning</strong>. I am particularly interested in understanding the fundamental principles of learning and developing more capable, efficient, and generalizable intelligent systems.
             </p>
-            <div className="hero-socials" role="group" aria-label="Contact and profile links">
-              <a className="button" href={`mailto:${profile.email}`}><Mail size={18} aria-hidden="true" /> Email</a>
-              <a className="button" href={profile.resume} target="_blank" rel="noopener noreferrer"><FileText size={18} aria-hidden="true" /> CV</a>
-              <a className="button" href={profile.scholar} target="_blank" rel="noopener noreferrer"><GraduationCap size={18} aria-hidden="true" /> Google Scholar</a>
-              <a className="button" href={profile.github} target="_blank" rel="noopener noreferrer"><Github size={18} aria-hidden="true" /> GitHub</a>
-              <a className="button" href={profile.linkedin} target="_blank" rel="noopener noreferrer"><Linkedin size={18} aria-hidden="true" /> LinkedIn</a>
-            </div>
-          </div>
-          <div className="hero-art">
-            <img className="hero-portrait" src={profile.portrait} alt={`Illustrated portrait of ${profile.name}`} width="800" height="800" />
-            <ResearchField paused={animationsPaused} onToggle={() => setAnimationsPaused(value => !value)} />
-            <div className="field-caption"><span><span className="status-dot" /> A conceptual research space</span><span aria-hidden="true">01 / &infin;</span></div>
           </div>
         </div>
-        <div className="hero-bottom"><p>{profile.name} <span aria-hidden="true">/</span> {profile.location}</p><a href="#research">SCROLL TO EXPLORE <ArrowDown size={18} aria-hidden="true" /></a></div>
+        <div className="hero-research-panel">
+          <ResearchField paused={animationsPaused} onToggle={() => setAnimationsPaused(value => !value)} />
+          <div className="field-caption"><span><span className="status-dot" /> A conceptual research space</span><span aria-hidden="true">01 / &infin;</span></div>
+        </div>
+        <div className="hero-bottom"><span className="hero-bottom-line" aria-hidden="true" /><a href="#research">SCROLL TO EXPLORE <ArrowDown size={18} aria-hidden="true" /></a></div>
       </div>
     </section>
   );
