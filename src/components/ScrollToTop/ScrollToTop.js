@@ -1,46 +1,19 @@
-// src/components/ScrollToTop/ScrollToTop.js
-
 import React, { useState, useEffect } from 'react';
-import { FaArrowUp } from 'react-icons/fa';
+import { ArrowUp } from 'lucide-react';
 
 function ScrollToTop() {
   const [visible, setVisible] = useState(false);
 
-  // Function to toggle visibility based on scroll position
-  const toggleVisible = () => {
-    const scrolled = window.scrollY;
-    if (scrolled > 300) {
-      setVisible(true);
-    } else if (scrolled <= 300) {
-      setVisible(false);
-    }
-  };
-
-  // Function to scroll smoothly to the top
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth', // Smooth scroll
-    });
-  };
-
-  // Add scroll event listener on mount and clean up on unmount
   useEffect(() => {
-    window.addEventListener('scroll', toggleVisible);
+    const toggleVisible = () => setVisible(window.scrollY > 700);
+    toggleVisible();
+    window.addEventListener('scroll', toggleVisible, { passive: true });
     return () => window.removeEventListener('scroll', toggleVisible);
   }, []);
 
-  return (
-    <button
-      onClick={scrollToTop}
-      aria-label="Scroll to Top"
-      className={`fixed bottom-8 right-8 bg-gray-700 text-white p-4 rounded-full shadow-lg hover:bg-gray-600 transition-transform transform ${
-        visible ? 'opacity-100' : 'opacity-0 pointer-events-none'
-      }`}
-    >
-      <FaArrowUp size={20} />
-    </button>
-  );
+  if (!visible) return null;
+
+  return <a className="back-to-top" href="#home" aria-label="Back to top"><ArrowUp size={19} aria-hidden="true" /></a>;
 }
 
 export default ScrollToTop;

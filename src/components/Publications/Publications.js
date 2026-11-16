@@ -1,90 +1,45 @@
-// src/components/Publications/Publications.js
-
 import React from 'react';
+import { ArrowUpRight } from 'lucide-react';
+import SectionHeading from '../SectionHeading/SectionHeading';
+import CopyButton from '../CopyButton/CopyButton';
+import { publications } from '../../data/portfolio';
 
-const publicationsData = [
-  {
-    title: "Federated Unlearning via Subparameter Space Partitioning and Selective Freezing",
-    journal: "AAAI Workshop on Datasets and Evaluators of AI Safety",
-    year: "2025",
-    status: "Accepted",
-    description: "This paper explores a federated unlearning method to forget few concepts from the clients.",
-    link: "https://example.com/publication1",
-    image: `${process.env.PUBLIC_URL}/media/images/publication1.jpg`, // Replace with the actual image path
-  },
-  {
-    title: "Adaptive Federated Gradient Reparameterization for Effective Intrusion Detection in Non-IID Settings",
-    journal: "NeurIPS Workshop on Adaptive Foundation Models",
-    year: "2024",
-    status: "Pre-print",
-    description: "This paper explores our adpative aggregation method FedGRAA to overcome data heterogeneity.",
-    link: "https://example.com/publication1",
-    image: `${process.env.PUBLIC_URL}/media/images/publication1.jpg`, // Replace with the actual image path
-  },
-  // Add more publications as needed
-];
-
-const Publications = () => {
-  return (
-    <section id="publications" className="py-16 bg-gray-800 px-4">
-      <div className="max-w-6xl mx-auto">
-        {/* Heading */}
-        <h2 className="text-4xl font-bold text-center mb-12 text-white relative">
-          <span className="mr-2">
-            <span className="text-5xl text-blue-500 font-extrabold">P</span>UBLICATIONS
-          </span>
-          <div className="mt-2 w-16 h-1 bg-blue-500 mx-auto"></div>
-        </h2>
-        
-        {/* Publications List */}
-        <div className="space-y-6">
-          {publicationsData.map((publication, index) => (
-            <div 
-              key={index} 
-              className="bg-gray-900 rounded-lg shadow-lg p-6 flex flex-col md:flex-row items-start md:items-center"
-            >
-              {/* Image on the Left */}
-              {publication.image && (
-                <div className="md:w-1/4 w-full mb-4 md:mb-0 md:mr-6">
-                  <img
-                    src={publication.image}
-                    alt={publication.title}
-                    className="w-full h-auto rounded-lg object-cover"
-                    loading="lazy"
-                  />
+const Publications = () => (
+  <section id="publications" className="section publications-section" aria-labelledby="publications-heading">
+    <div className="container">
+      <SectionHeading
+        id="publications-heading"
+        number="03"
+        label="RESEARCH & PUBLICATIONS"
+        title={<>Questions worth<br /><em>looking into.</em></>}
+        description="Selected workshop papers on learning across distributed data and making AI systems more responsible."
+      />
+      <div className="publication-list">
+        {publications.map((publication, index) => (
+          <article className="publication-card" key={publication.id} aria-labelledby={`paper-${publication.id}`}>
+            <div className="publication-marker">
+              <span className="publication-index">0{index + 1}</span>
+              <span>{publication.shortVenue}<br /><strong>{publication.year}</strong></span>
+            </div>
+            <div className="publication-content">
+              <div className="publication-topline"><span className="tiny-label">WORKSHOP PAPER</span><span className="accepted-badge">{publication.status}</span></div>
+              <h3 id={`paper-${publication.id}`}><a href={publication.url} target="_blank" rel="noopener noreferrer">{publication.title}</a></h3>
+              <p className="publication-authors">{publication.authors}</p>
+              <p className="publication-venue">{publication.venue}</p>
+              <div className="publication-bottom">
+                <ul className="tag-list" aria-label="Research topics">{publication.topics.map((topic) => <li key={topic}>{topic}</li>)}</ul>
+                <div className="publication-actions">
+                  <a className="text-link" href={publication.url} target="_blank" rel="noopener noreferrer" aria-label={`Read publication: ${publication.title}`}>Read publication <ArrowUpRight size={17} aria-hidden="true" /></a>
+                  <CopyButton label="Copy citation" successMessage="Citation copied." value={`${publication.authors.replace(/\*/g, '')} (${publication.year}). ${publication.title}. ${publication.venue}. ${publication.url}`} />
                 </div>
-              )}
-
-              {/* Publication Details */}
-              <div className="md:w-3/4 w-full">
-                <h3 className="text-2xl font-semibold text-blue-500 mb-2">{publication.title}</h3>
-                <div className="flex items-center text-gray-400 text-sm mb-2">
-                  <span>{publication.journal} • {publication.year}</span>
-                  
-                  {/* Status Button as a Link */}
-                  {publication.status && publication.link && (
-                    <a
-                      href={publication.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`ml-4 px-2 py-1 rounded-full text-xs font-semibold transition-colors duration-200 ${
-                        publication.status === "Published"
-                          ? "bg-green-500 text-white hover:bg-green-600"
-                          : "bg-yellow-500 text-gray-800 hover:bg-yellow-600"
-                      }`}
-                    >
-                      {publication.status}
-                    </a>
-                  )}
-                </div>
-                <p className="text-gray-300 mb-4">{publication.description}</p>
               </div>
             </div>
-          ))}
-        </div>
+          </article>
+        ))}
       </div>
-    </section>
-  );
-};
+      <p className="publication-note">* Major contribution. Author order is shown as listed in the resume.</p>
+    </div>
+  </section>
+);
 
 export default Publications;

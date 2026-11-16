@@ -1,17 +1,18 @@
-// src/components/About/skillsData.js
-
-// Define the skills data with categories
 export const skillsData = [
   {
-    category: 'Programming',
-    skills: ['C', 'C++', 'Python', 'HTML', 'CSS', 'JavaScript'],
+    category: 'Models & learning',
+    skills: ['PyTorch', 'JAX', 'vLLM', 'DeepSpeed', 'ONNX', 'OpenCV'],
   },
   {
-    category: 'Libraries & Frameworks',
-    skills: ['NumPy', 'Pandas', 'PyTorch', 'MLflow', 'React.js', 'TensorFlow', 'Gym', 'ROS', 'OpenCV'],
+    category: 'Agents & retrieval',
+    skills: ['LangChain', 'LangGraph', 'GraphRAG', 'Microsoft Agent Framework', 'Azure AI Foundry'],
   },
   {
-    category: 'Software & Tools',
-    skills: ['AWS', 'Git', 'MATLAB', 'CloudCompare', 'MeshLab', 'Revit', 'Docker', 'Remix', 'Ganache'],
+    category: 'Engineering & cloud',
+    skills: ['Python', 'C / C++', 'React', 'JavaScript', 'Azure', 'AWS', 'Docker'],
+  },
+  {
+    category: 'Data & experiments',
+    skills: ['NumPy', 'Pandas', 'Spark', 'SQL', 'MLflow', 'Git'],
   },
 ];

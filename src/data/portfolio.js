@@ -1,0 +1,486 @@
+export const profile = {
+  name: 'Varala Nandu Swapnik',
+  shortName: 'Swapnik Varala',
+  role: 'Research Fellow',
+  company: 'Microsoft India (R&D) Pvt Ltd',
+  location: 'Bengaluru, India',
+  email: 'swapnikvarala@gmail.com',
+  scholar: 'https://scholar.google.com/citations?user=qTU92b8AAAAJ&hl=en',
+  linkedin: 'https://www.linkedin.com/in/swapnik-varala/',
+  github: 'https://github.com/swapnik-iitkgp',
+  resume: `${process.env.PUBLIC_URL}/media/Swapnik%20Resume.pdf`,
+  portrait: `${process.env.PUBLIC_URL}/media/images/swapnik-image.jpg`,
+};
+
+export const navigation = [
+  { id: 'research', label: 'Research' },
+  { id: 'projects', label: 'Work' },
+  { id: 'publications', label: 'Publications' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'contact', label: 'Contact' },
+];
+
+// Role dates follow LinkedIn; work details use the supplied resume and latest introduction.
+export const experiences = [
+  {
+    id: 'microsoft',
+    organization: 'Microsoft',
+    initials: 'MS',
+    category: 'Industry',
+    period: 'Oct 2025 - present',
+    location: 'Bengaluru, India / On-site',
+    current: true,
+    roles: [
+      {
+        title: 'Research Fellow',
+        period: 'Oct 2026 - present',
+        points: [
+          'Working with the PROSE team at Microsoft India (R&D) Pvt Ltd on AI research for Excel Copilot, focusing on the evaluation and reliability of intelligent agents.',
+        ],
+      },
+      {
+        title: 'Research Engineer',
+        period: 'Oct 2025 - Sep 2026',
+        points: [
+          'Built Agentic Shiksha at Microsoft Research India: an educational platform paired with the EKALAIVA framework, with Teaching Assistant and Lumen agents.',
+          'Designed multi-agent workflows, contextualized learning, agent memory, curriculum versioning, and teacher analytics, guided by Dr. Manohar Swaminathan.',
+          'Built usage tracking and groundedness evaluation, and conducted a phase-one research study with teachers and students across four institutes.',
+        ],
+      },
+    ],
+    skills: ['Agentic AI', 'Agent evaluation', 'Python', 'React', 'GraphRAG', 'Azure AI', 'Cosmos DB'],
+    link: 'https://github.com/microsoft/Agentic-Shiksha',
+    linkLabel: 'Explore Agentic Shiksha',
+  },
+  {
+    id: 'sarvam',
+    organization: 'Sarvam AI',
+    initials: 'Sa',
+    category: 'Industry',
+    period: 'Mar - Apr 2025',
+    location: 'Bengaluru, India / Remote',
+    roles: [
+      {
+        title: 'Deep Learning Intern',
+        period: 'Mar - Apr 2025',
+        points: [
+          'Built OCR for multi-font, degraded historical Gujarati books using Google Cloud Vision and fine-tuned, multi-column Tesseract.',
+          'Combined Genalog synthetic data with language-model text correction and VLM-based HTML previews, achieving average word and character error rates of 1.5% and 0.6%.',
+        ],
+      },
+    ],
+    skills: ['OCR', 'Vision-language models', 'Tesseract', 'Genalog'],
+  },
+  {
+    id: 'chisquarex',
+    organization: 'Chi SquareX',
+    initials: 'CX',
+    category: 'Industry',
+    period: 'Dec 2024 - Mar 2025',
+    location: 'Bengaluru, India / Remote',
+    roles: [
+      {
+        title: 'Machine Learning Developer / Freelance',
+        period: 'Feb - Mar 2025',
+        points: ['Worked in agentic AI as a freelance machine learning developer.'],
+      },
+      {
+        title: 'Machine Learning Intern',
+        period: 'Dec 2024 - Jan 2025',
+        points: [
+          'Developed a multi-agent research-paper writing system with a manager agent, section-specific writers, LaTeX agents, and shared retrieval tools.',
+          'Combined Gemini Flash 1.5, Cohere embeddings, and Llama 3.3 to generate papers in under three minutes, with a Tkinter interface.',
+        ],
+      },
+    ],
+    skills: ['LangChain', 'LangGraph', 'RAG', 'Multi-agent systems', 'PyLaTeX'],
+  },
+  {
+    id: 'mvizn',
+    organization: 'mVizn',
+    initials: 'mv',
+    category: 'Industry',
+    period: 'Apr - Jun 2024',
+    location: 'Singapore / Remote',
+    roles: [
+      {
+        title: '3D Computer Vision Intern',
+        period: 'Apr - Jun 2024',
+        points: [
+          'Contributed to Zontro, a construction-progress dashboard using LiDAR scans and building information models.',
+          'Trained PointNet++ and KPConv for 3D semantic segmentation, reporting 64.26% and 93.46% mIoU respectively; processed point clouds with Open3D, CloudCompare, and MeshLab.',
+        ],
+      },
+    ],
+    skills: ['3D vision', 'Point clouds', 'KPConv', 'Open3D'],
+  },
+  {
+    id: 'neuralzome',
+    organization: 'Neuralzome Cybernetics',
+    initials: 'Nz',
+    category: 'Industry',
+    period: 'Jan - Feb 2024',
+    location: 'Bengaluru, India / Remote',
+    roles: [
+      {
+        title: 'Vision and Perception Intern',
+        period: 'Jan - Feb 2024',
+        points: [
+          'Contributed to Neuralpilot for off-road autonomy, including a Zenoh wrapper for USB cameras, calibration, relative pose estimation, and stereo depth.',
+          'Worked with Faster R-CNN, YOLOv8, and YOLOv9 for human detection, and implemented distortion removal and odometry for ATV state estimation.',
+        ],
+      },
+    ],
+    skills: ['Robotics', 'YOLO', 'Stereo vision', 'Camera calibration'],
+  },
+  {
+    id: 'cognitive-view',
+    organization: 'Cognitive View',
+    initials: 'cv',
+    category: 'Industry',
+    period: 'Nov - Dec 2023',
+    location: 'Bhubaneswar, India / Remote',
+    roles: [
+      {
+        title: 'Machine Learning Intern',
+        period: 'Nov - Dec 2023',
+        points: [
+          'Developed an Event Analytics API for compliance and risk analysis, with sentiment, emotion, multi-label classification, and keyword-extraction models.',
+          'Reported 91% sentiment accuracy with VADER and 93.4% emotion accuracy with RoBERTa; tracked and deployed models using MLflow, AWS EC2, S3, and Apache Kafka.',
+        ],
+      },
+    ],
+    skills: ['NLP', 'RoBERTa', 'MLflow', 'AWS', 'Apache Kafka'],
+  },
+  {
+    id: 'hprtc',
+    organization: 'High Performance Real-time Computing Lab',
+    initials: 'RT',
+    category: 'Research',
+    period: 'Jan - Apr 2025',
+    location: 'IIT Kharagpur / On-site',
+    roles: [
+      {
+        title: 'Undergraduate Researcher',
+        period: 'Jan - Apr 2025',
+        points: ['Undergraduate research in cyber-physical systems.'],
+      },
+    ],
+    skills: ['Cyber-physical systems'],
+  },
+  {
+    id: 'sai',
+    organization: 'Security and AI (SAI) Lab',
+    initials: 'SA',
+    category: 'Research',
+    period: 'Sep - Nov 2024',
+    location: 'Remote',
+    roles: [
+      {
+        title: 'Machine Learning Research Intern',
+        period: 'Sep - Nov 2024',
+        points: [
+          'Developed FedGRAA to address heterogeneous, non-IID data in federated intrusion detection, under the guidance of Krishna Yadav.',
+          'Compared aggregation with FedAvg and FedProx on CICIDS 2017, targeting critical classes including Heartbleed and SQL injection, and reported 88.8% accuracy in these experiments.',
+        ],
+      },
+    ],
+    skills: ['Federated learning', 'Machine unlearning', 'Edge intelligence'],
+  },
+  {
+    id: 'cnerg',
+    organization: 'CNERG, IIT Kharagpur',
+    initials: 'CN',
+    category: 'Research',
+    period: 'May - Nov 2024',
+    location: 'Kharagpur, India / On-site',
+    roles: [
+      {
+        title: 'Undergraduate Researcher',
+        period: 'May - Nov 2024',
+        points: [
+          'Undergraduate research with the Complex Networks Research Group, focused on machine unlearning and large language models.',
+        ],
+      },
+    ],
+    skills: ['Machine unlearning', 'Large language models'],
+  },
+  {
+    id: 'ntu',
+    organization: 'Nanyang Technological University',
+    initials: 'NT',
+    category: 'Research',
+    period: 'Jul - Aug 2024',
+    location: 'Singapore / Remote',
+    roles: [
+      {
+        title: 'AI Research Intern',
+        period: 'Jul - Aug 2024',
+        points: [
+          'Explored low-resource multimodal depression detection under Dr. Eng-Siong Chng, using Qwen2-Audio and QLoRA fine-tuning of Qwen-Audio on DAIC-WOZ.',
+          'Fine-tuned wav2vec 2.0 for feature extraction and used LSTMs for depression-detection experiments, reporting a 74% F1 score.',
+        ],
+      },
+    ],
+    skills: ['Audio-language models', 'QLoRA', 'wav2vec 2.0', 'Multimodal AI'],
+  },
+  {
+    id: 'iit-hyderabad',
+    organization: 'ViGIL Lab, IIT Hyderabad',
+    initials: 'IH',
+    category: 'Research',
+    period: 'May - Jul 2023',
+    location: 'IIT Hyderabad / Remote',
+    roles: [
+      {
+        title: 'Computer Vision Research Intern',
+        period: 'May - Jul 2023',
+        points: [
+          'Contributed to the M2Smart project for self-driving cars with LiDAR, guided by Dr. C. Krishna Mohan.',
+          'Explored PointNet, PointNet++, and PVCN for 3D semantic segmentation; PointNet experiments achieved 72% mIoU on vKITTI, 83.7% on ShapeNet10, and 78.8% on S3DIS.',
+        ],
+      },
+    ],
+    skills: ['PyTorch', '3D semantic segmentation', 'LiDAR', 'PointNet'],
+  },
+  {
+    id: 'iit-kgp',
+    organization: 'IIT Kharagpur',
+    initials: 'IK',
+    category: 'Research',
+    period: 'Feb - Apr 2023',
+    location: 'Kharagpur, India / Hybrid',
+    roles: [
+      {
+        title: 'NLP Research Intern',
+        period: 'Feb - Apr 2023',
+        points: ['Worked on natural language processing research using PyTorch.'],
+      },
+    ],
+    skills: ['PyTorch', 'Natural language processing'],
+  },
+  {
+    id: 'spark4ai',
+    organization: 'SPARK4AI, IIT Kharagpur',
+    initials: 'S4',
+    category: 'Leadership',
+    period: 'Nov 2023 - Nov 2024',
+    location: 'IIT Kharagpur / On-site',
+    roles: [
+      {
+        title: 'AI Head',
+        period: 'Nov 2023 - Nov 2024',
+        points: [],
+      },
+    ],
+    skills: ['Digital image processing', 'Variational autoencoders', 'AI'],
+  },
+  {
+    id: 'kodeinkgp',
+    organization: 'KodeinKGP, IIT Kharagpur',
+    initials: 'KK',
+    category: 'Leadership',
+    period: 'Nov 2022 - Jun 2023',
+    location: 'IIT Kharagpur / On-site',
+    roles: [
+      {
+        title: 'Tech Team Member',
+        period: 'Nov 2022 - Jun 2023',
+        points: [],
+      },
+    ],
+    skills: ['JavaScript', 'CSS', 'Web development'],
+  },
+  {
+    id: 'chess',
+    organization: 'Chess Club, IIT Kharagpur',
+    initials: 'CC',
+    category: 'Leadership',
+    period: 'Jan 2022 - Jul 2023',
+    location: 'IIT Kharagpur / On-site',
+    roles: [
+      { title: 'Tactics Team Member', period: 'Jul 2022 - Jul 2023', points: [] },
+      { title: 'Team Member', period: 'Jan - Jun 2022', points: [] },
+    ],
+    skills: ['Chess', 'Tactics'],
+  },
+];
+
+export const projects = [
+  {
+    id: 'agentic-shiksha',
+    title: 'Agentic Shiksha',
+    category: 'Agent systems',
+    type: 'Research & engineering',
+    organization: 'Microsoft Research India',
+    year: '2025 - 2026',
+    visual: 'agents',
+    description:
+      'A multi-agent learning platform connecting teaching assistants, personalized learning, and teacher insight.',
+    highlight: 'Phase-one study across 4 institutes',
+    question: 'How can an agentic platform support a new pedagogy while keeping teachers connected to student learning?',
+    approach: 'Built Agentic Shiksha alongside the EKALAIVA pedagogical framework, guided by Dr. Manohar Swaminathan. Teaching Assistant and Lumen agents share learning context.',
+    details: [
+      'Designed hybrid and modular agents for institute and curriculum research, image generation, and agent updates.',
+      'Built artifact creation, agent memory, personalized learning, progress tracking, and curriculum version control.',
+      'Connected teacher feedback and student learning states to a teacher analytics dashboard.',
+      'Implemented usage tracking and groundedness evaluation, and conducted a phase-one research study across four institutes.',
+    ],
+    context: 'The diagram is a conceptual overview, not a live system. The resume reports the study scope, but does not claim a learning-outcome improvement.',
+    skills: ['Python', 'React', 'GraphRAG', 'Azure AI'],
+    url: 'https://github.com/microsoft/Agentic-Shiksha',
+  },
+  {
+    id: 'countdown',
+    title: 'Learning to reason with GRPO',
+    category: 'Model learning',
+    type: 'Training experiment',
+    organization: 'Independent project',
+    year: '2025',
+    visual: 'reasoning',
+    description:
+      'Post-training Qwen 2.5 3B on the Countdown game with verifiable rewards and distributed reinforcement learning.',
+    highlight: '50% task success / 8,000 prompts',
+    question: "Can verifiable arithmetic rewards improve a language model's ability to construct correct reasoning solutions?",
+    approach: 'Trained Qwen 2.5 3B with GRPO on 8,000 Countdown-game prompts, monitoring task rewards and training stability.',
+    details: [
+      'Mean reward increased from 0 to 3.1 in the reported experiment.',
+      'Reached 50% task success in the reported setup.',
+      'Used four A100 GPUs for distributed training.',
+      'Tracked KL divergence near 0.22 and gradient norm below 0.14 at 450 steps.',
+    ],
+    context: 'Results describe the resume project; evaluation split and reward scale are not specified. The interactive verifier checks arithmetic locally. It does not run Qwen or demonstrate the reported model accuracy.',
+    skills: ['GRPO', 'Qwen 2.5', 'RL post-training', '4 x A100'],
+  },
+  {
+    id: 'gujarati-ocr',
+    title: 'Recovering language from history',
+    category: 'Perception',
+    type: 'Applied research',
+    organization: 'Sarvam AI',
+    year: '2025',
+    visual: 'ocr',
+    description: 'An OCR pipeline for historical Gujarati books, handling degraded pages, multiple fonts, and complex columns.',
+    highlight: '1.5% WER / 0.6% CER',
+    question: 'How can historical Gujarati books be digitized accurately despite degradation and varied page layouts?',
+    approach: 'Combined Google Cloud Vision and fine-tuned multi-column Tesseract with language and vision models for correction, guided by Krishna Prasad Srinivasan.',
+    details: [
+      'Built recognition for multiple fonts and degraded historical documents.',
+      'Used Gemini 2.5 Pro and Claude 3 Sonnet for text correction.',
+      'Generated synthetic training data with Genalog.',
+      'Reported average word error rate of 1.5% and character error rate of 0.6%, and produced HTML previews with VLMs.',
+    ],
+    context: 'Error rates are averages reported for the internship pipeline. The page graphic is a schematic, not a scan from the evaluation data.',
+    skills: ['OCR', 'Vision-language models', 'Tesseract', 'Synthetic data'],
+  },
+  {
+    id: 'spatial-perception',
+    title: 'Making sense of 3D spaces',
+    category: 'Perception',
+    type: 'Vision & spatial learning',
+    organization: 'mVizn',
+    year: '2024',
+    visual: 'spatial',
+    description: 'Semantic segmentation of LiDAR point clouds for construction progress tracking and spatial understanding.',
+    highlight: '93.46% mIoU with KPConv',
+    question: 'How can raw point clouds become useful semantic information for tracking construction progress?',
+    approach: 'Contributed to the Zontro dashboard, which connects LiDAR scans and building information models, guided by Arijit De.',
+    details: [
+      'Trained and evaluated PointNet++ and KPConv semantic segmentation models.',
+      'Reported mIoU of 64.26% for PointNet++ and 93.46% for KPConv in the project setting.',
+      'Used Open3D, CloudCompare, and MeshLab for noise removal and point-cloud alignment.',
+    ],
+    context: 'Scores are project-specific results reported in the resume, not cross-dataset benchmark claims. The point cloud is a procedural illustration.',
+    skills: ['3D perception', 'PointNet++', 'KPConv', 'LiDAR'],
+  },
+  {
+    id: 'concept-erasure',
+    title: 'Few-shot concept erasure',
+    category: 'Model learning',
+    type: "Bachelor's thesis",
+    organization: 'IIT Kharagpur',
+    year: '2024',
+    visual: 'erasure',
+    description:
+      'Exploring concept erasure and gender-bias mitigation in word representations and language-model outputs.',
+    highlight: 'RLACE / Llama 2 7B',
+    question: 'How can gender-related information in representations and outputs be reduced while studying what remains?',
+    approach: 'Worked under Dr. Sourangshu Bhattacharya on few-shot concept erasure with language models.',
+    details: [
+      'Applied RLACE to GloVe embeddings on the BIOS dataset with a linear adversary.',
+      'Prompted and fine-tuned Llama 2 7B on BIOS and rtGender to study gender-bias mitigation.',
+    ],
+    context: 'The resume describes these thesis methods but does not report a quantitative bias-reduction result; none is asserted here.',
+    skills: ['Machine unlearning', 'RLACE', 'LLMs'],
+  },
+  {
+    id: 'multi-agent-rl',
+    title: 'How do agents learn together?',
+    category: 'Model learning',
+    type: 'Course research',
+    organization: 'IIT Kharagpur',
+    year: '2024',
+    visual: 'marl',
+    description:
+      'Benchmarking VDN, QMIX, and COMA across multi-agent environments to understand where each method works.',
+    highlight: '200+ Optuna sweeps',
+    question: 'How does environment structure affect the relative performance of cooperative multi-agent learning algorithms?',
+    approach: 'Implemented VDN, QMIX, and COMA across PettingZoo, MetaDrive, MaMuJoCo, and Flatland environments.',
+    details: [
+      'Ran more than 200 Optuna sweeps.',
+      'Observed QMIX outperforming VDN by 24 percentage points on the reported MetaDrive and MaMuJoCo setups.',
+      'Observed the reverse ordering on Flatland-Defence, highlighting the importance of environment-specific evaluation.',
+    ],
+    context: 'These comparisons refer to the course-project setups in the resume. They are not universal rankings of the algorithms.',
+    skills: ['Multi-agent RL', 'PettingZoo', 'Optuna'],
+  },
+  {
+    id: 'hate-speech',
+    title: 'Understanding harmful language',
+    category: 'Model learning',
+    type: 'Course project',
+    organization: 'IIT Kharagpur',
+    year: '2023',
+    visual: 'language',
+    description:
+      'Studied hate-speech classification on HateXplain using Word2Vec, ANNs, RNNs, and BERT. Explored zero- and few-shot Flan-T5 prompting and parameter-efficient fine-tuning.',
+    highlight: 'LoRA + QLoRA fine-tuning',
+    question: 'How do different language representations and adaptation methods support hate-speech classification?',
+    approach: 'Compared neural and language-model approaches on HateXplain, from Word2Vec features to Flan-T5 adaptation.',
+    details: [
+      'Used Word2Vec features with ANNs and RNNs, alongside BERT-based classification.',
+      'Explored zero-shot and few-shot prompting with Flan-T5.',
+      'Fine-tuned Flan-T5-base with LoRA and QLoRA.',
+    ],
+    context: 'The resume describes the methods used in this course project, but does not provide classification scores. The illustration is conceptual.',
+    skills: ['NLP', 'Flan-T5', 'HateXplain'],
+  },
+];
+
+export const publications = [
+  {
+    id: 'data-skew',
+    title:
+      'Overcoming Data Skew: Adaptive Federated Reparameterization in Edge Intelligence',
+    venue:
+      'IEEE INFOCOM 2025 Workshop on Integrating Edge Intelligence and Large Model in Next Generation Networks',
+    shortVenue: 'IEEE INFOCOM',
+    year: '2025',
+    authors: 'Varala Nandu Swapnik*, Krishna Yadav*, et al.',
+    status: 'Accepted',
+    topics: ['Federated learning', 'Edge intelligence'],
+    url: 'https://www.researchgate.net/publication/395643852_Overcoming_Data_Skew_Adaptive_Federated_Reparameterization_in_Edge_Intelligence',
+  },
+  {
+    id: 'federated-unlearning',
+    title:
+      'Federated Unlearning via Subparameter Space Partitioning and Selective Freezing',
+    venue: 'AAAI 2025 Workshop on Datasets and Evaluators of AI Safety',
+    shortVenue: 'AAAI',
+    year: '2025',
+    authors: 'Varala Nandu Swapnik*, Krishna Yadav*, et al.',
+    status: 'Accepted',
+    topics: ['Machine unlearning', 'AI safety'],
+    url: 'https://www.researchgate.net/publication/394853859_Federated_Unlearning_via_Subparameter_Space_Partitioning_and_Selective_Freezing',
+  },
+];

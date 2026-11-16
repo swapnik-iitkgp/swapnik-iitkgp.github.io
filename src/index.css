@@ -1,18 +1,101 @@
-/* src/index.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Remove the incorrect @apply */
-/* Force dark mode by adding the 'dark' class to the root element */
+@font-face {
+  font-family: 'Manrope';
+  src: url('./assets/manrope.ttf') format('truetype');
+  font-weight: 200 800;
+  font-display: swap;
+}
 
-body {
-  margin: 0;
-  font-family: 'Arial', sans-serif;
-  background-color: #121212; /* Ensure dark background */
-  color: #e0e0e0; /* Light text color */
+:root {
+  color-scheme: dark;
+  --paper: #111210;
+  --panel: #1a1d17;
+  --ink: #edeee7;
+  --muted: #a9afa0;
+  --green: #d2e6a3;
+  --sage: #242c1d;
+  --line: #363e30;
+  --mono: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Manrope', 'Segoe UI', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, p, ul, figure {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button, input, textarea {
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: wait;
+}
+
+button, a, summary {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 5px;
+}
+
+::selection {
+  background: var(--green);
+  color: #172010;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+section[id] {
+  scroll-margin-top: 24px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

@@ -3,7 +3,7 @@
 import React from 'react';
 
 // Merged data for a single timeline
-// const newsData = [
+const newsData = [
 //   {
 //     date: "Jun '24",
 //     title: "Manuscript on Adaptive Dynamics Optimization for Autonomous Driving submitted to",
