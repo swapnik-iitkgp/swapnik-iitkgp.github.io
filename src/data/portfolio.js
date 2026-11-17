@@ -1,4 +1,5 @@
 export const profile = {
+  lastUpdated: '2026-11-17',
   name: 'Varala Nandu Swapnik',
   shortName: 'Swapnik Varala',
   role: 'Research Fellow',
@@ -8,6 +9,7 @@ export const profile = {
   scholar: 'https://scholar.google.com/citations?user=qTU92b8AAAAJ&hl=en',
   linkedin: 'https://www.linkedin.com/in/swapnik-varala/',
   github: 'https://github.com/swapnik-iitkgp',
+  medium: 'https://medium.com/@swapnikvarala',
   resume: `${process.env.PUBLIC_URL}/media/Swapnik%20Resume.pdf`,
   portrait: `${process.env.PUBLIC_URL}/media/images/swapnik-image.jpg`,
 };
@@ -17,7 +19,7 @@ export const navigation = [
   { id: 'projects', label: 'Work' },
   { id: 'publications', label: 'Publications' },
   { id: 'experience', label: 'Experience' },
-  { id: 'contact', label: 'Contact' },
+  { id: 'explorations', label: 'Explorations' },
 ];
 
 // Role dates follow LinkedIn; work details use the supplied resume and latest introduction.

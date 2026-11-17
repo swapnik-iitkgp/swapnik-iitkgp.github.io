@@ -1,27 +1,39 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Menu, X } from 'lucide-react';
+import { ArrowUpRight, Menu, X } from 'lucide-react';
 import { navigation } from '../../data/portfolio';
+import SectionSelector, { sectionLinks } from '../SectionSelector/SectionSelector';
 
-const Navbar = () => {
+const Navbar = ({ isExplorations = false, hasScrolled }) => {
   const [navOpen, setNavOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
+  const [activeSection, setActiveSection] = useState(isExplorations ? 'explorations' : 'home');
   const menuButton = useRef(null);
   const header = useRef(null);
 
   useEffect(() => {
-    if (!window.IntersectionObserver) return undefined;
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) setActiveSection(entry.target.id);
-      });
-    }, { rootMargin: '-15% 0px -65% 0px' });
+    if (isExplorations || !window.IntersectionObserver) return undefined;
+    let observer;
+    const observeSections = () => {
+      observer?.disconnect();
+      const height = window.innerHeight;
+      // Percentage root margins use viewport width, including the vertical edges.
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        });
+      }, { rootMargin: `-${height * 0.15}px 0px -${height * 0.65}px 0px` });
 
-    ['home', ...navigation.map((item) => item.id)].forEach((id) => {
-      const section = document.getElementById(id);
-      if (section) observer.observe(section);
-    });
-    return () => observer.disconnect();
-  }, []);
+      ['home', ...sectionLinks.map(item => item.id)].forEach(id => {
+        const section = document.getElementById(id);
+        if (section) observer.observe(section);
+      });
+    };
+    observeSections();
+    window.addEventListener('resize', observeSections);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', observeSections);
+    };
+  }, [isExplorations]);
 
   useEffect(() => {
     if (!navOpen) return undefined;
@@ -43,18 +55,19 @@ const Navbar = () => {
   }, [navOpen]);
 
   return (
+    <>
     <header className="site-header" ref={header}>
       <div className="container nav-inner">
         <a
           className="nav-welcome"
-          href="#home"
+          href={isExplorations ? '/#home' : '#home'}
           aria-current={activeSection === 'home' ? 'location' : undefined}
           onClick={() => {
             setActiveSection('home');
             setNavOpen(false);
           }}
         >
-          The Curious Neuron
+          <span>The Curious Neuron</span>
         </a>
         <button
           ref={menuButton}
@@ -72,14 +85,16 @@ const Navbar = () => {
             {navigation.map((item) => (
               <li key={item.id}>
                 <a
-                  href={`#${item.id}`}
-                  aria-current={activeSection === item.id ? 'location' : undefined}
+                  href={item.id === 'explorations' ? '/explorations/' : `${isExplorations ? '/' : ''}#${item.id}`}
+                  className={item.id === 'explorations' ? 'nav-explorations' : undefined}
+                  aria-current={activeSection === item.id ? (isExplorations ? 'page' : 'location') : undefined}
                   onClick={() => {
                     setActiveSection(item.id);
                     setNavOpen(false);
                   }}
                 >
-                {item.label}
+                  {item.label}
+                  {item.id === 'explorations' && <ArrowUpRight size={15} aria-hidden="true" />}
                 </a>
               </li>
             ))}
@@ -87,6 +102,8 @@ const Navbar = () => {
         </nav>
       </div>
     </header>
+    {!isExplorations && hasScrolled && activeSection !== 'home' && <SectionSelector activeSection={activeSection} onSelect={setActiveSection} />}
+    </>
   );
 };
 

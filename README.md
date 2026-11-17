@@ -18,17 +18,26 @@ experiences behind them, brought together in an interactive, dark-themed website
 | [Selected work](https://swapnik-iitkgp.github.io/#projects) | Filterable projects with detailed case studies, outcomes, and relevant links. |
 | [Publications](https://swapnik-iitkgp.github.io/#publications) | Research papers, workshop details, and citations. |
 | [Experience](https://swapnik-iitkgp.github.io/#experience) | Expandable role histories across industry, research, and leadership. |
-| [Education and skills](https://swapnik-iitkgp.github.io/#about) | Academic background, coursework, and a technical toolbox. |
-| [Contact](https://swapnik-iitkgp.github.io/#contact) | Email and professional profile links. |
+| [Toolbox](https://swapnik-iitkgp.github.io/#about) | Tools and frameworks for models, agents, engineering, and experiments. |
+| [Explorations](https://swapnik-iitkgp.github.io/explorations/) | A separate page for tutorials, ideas, animations, blogs, and interactive demos. |
 
 ## Interactive highlights
 
 - **A Fourier-drawn introduction.** The letters of SWAPNIK trace themselves with
   rotating vectors, fill with color, and begin again.
-- **An animated research space.** A sculptural network of connected points
-  accompanies the introduction, with a shared play/pause control for both hero visuals.
+- **A compact, portrait-led homepage.** The introduction, biography, and research
+  interests sit alongside an illustrated portrait in a two-column layout that
+  stacks on mobile.
 - **Click-reactive backgrounds.** Click or tap the page background to create soft,
   drifting diffusion clouds that fade away without interfering with links or controls.
+- **A desktop section selector.** A slim right-side rail jumps between sections,
+  highlights the current section, and reveals labels on hover or keyboard focus.
+  It appears from Research onward and stays hidden on the introduction.
+  Two soft chevrons drift gently together to invite scrolling from the introduction to Research,
+  without flashing. Motion pauses on hover or keyboard focus and stays off with reduced motion
+  enabled, while the page scrollbar stays hidden.
+  The cue disappears after 40 pixels of scrolling and returns near the top;
+  it never appears at the same time as the section selector.
 - **Project stories, not just cards.** Open a case study to explore its question,
   approach, work, and results. Individual projects have shareable links and support
   browser Back/Forward navigation.
@@ -37,14 +46,16 @@ experiences behind them, brought together in an interactive, dark-themed website
   immediate checks of your expression.
 - **Copy-ready research citations.** Copy a publication citation directly, with
   selectable text available when clipboard access is unavailable.
-- **Quick ways to connect.** Email, CV, Google Scholar, GitHub, and LinkedIn links
-  are available directly below the introduction.
+- **Quick ways to connect.** Email, Resume, Google Scholar, GitHub, LinkedIn,
+  and Medium sit beneath the portrait in a three-column, two-row grid.
+  A compact footer also offers a direct email link.
 
 ## Designed for comfortable browsing
 
 - Responsive layouts for desktop, tablet, and mobile.
 - A dark, sage-accented visual style with clear typography.
 - Keyboard-friendly navigation, visible focus states, and a skip-to-content link.
+- Text selection is disabled only in the introduction; research content and citations remain selectable.
 - Reduced-motion support and static alternatives for the animated name.
 - Project filters and expandable experience entries to keep longer sections easy to explore.
 

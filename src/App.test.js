@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, within } from '@testing-library/react';
+import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderToStaticMarkup } from 'react-dom/server.node';
 import App from './App';
@@ -62,10 +62,15 @@ test('places the portrait in the right visual column and preserves the PROSE int
   const heading = hero.getByRole('heading', { level: 1, name: 'My name is SWAPNIK' });
   expect(portrait).toBeVisible();
   expect(portrait.closest('.hero-art')).not.toBeNull();
+  const portraitFigure = within(portrait.closest('figure'));
+  expect(portraitFigure.getByText('Varala Nandu Swapnik')).toBeVisible();
+  expect(portraitFigure.getByRole('img', { name: 'Microsoft', exact: true })).toBeVisible();
   expect(heading.closest('.hero-copy')).not.toBeNull();
   expect(hero.getByText('Microsoft India (R&D) Pvt Ltd')).toBeVisible();
   expect(hero.getByText('Excel Copilot')).toBeVisible();
-  expect(hero.getByText('IIT Kharagpur in 2025')).toBeVisible();
+  const education = hero.getByText('IIT Kharagpur in 2025').closest('p');
+  expect(education).toHaveTextContent('I graduated from IIT Kharagpur in 2025 with a B.Tech. (Honours) in Metallurgical & Materials Engineering and a minor in Computer Science & Engineering.');
+  expect(education.closest('.hero-copy')).not.toBeNull();
   expect(hero.getByRole('link', { name: 'Research Fellow' })).toHaveAttribute('href', 'https://www.microsoft.com/en-us/research/people/t-nvarala/');
   expect(hero.getByRole('link', { name: 'PROSE team' })).toHaveAttribute('href', 'https://www.microsoft.com/en-us/research/group/prose/');
   expect(hero.getByRole('link', { name: 'Microsoft Research India' })).toHaveAttribute('href', 'https://www.microsoft.com/en-us/research/lab/microsoft-research-india/');
@@ -75,8 +80,11 @@ test('places the portrait in the right visual column and preserves the PROSE int
   expect(mentor).toHaveAttribute('href', 'https://www.microsoft.com/en-us/research/people/swmanohmicrosoft-com/');
   expect(mentor.closest('p')).toHaveTextContent(/^Previously, I was a Research Engineer at Microsoft Research India, working on Agentic Shiksha, an Agentic AI powered educational platform twinned with Project EKALAIVA, under the mentorship of Manohar Swaminathan\.$/);
   const researchAreas = hero.getByText('federated learning, machine unlearning, multimodal AI, NLP, and 2D & 3D computer vision');
-  expect(researchAreas.closest('p')).toHaveTextContent(/^My research spans federated learning, machine unlearning, multimodal AI, NLP, and 2D & 3D computer vision, with experience at Sarvam AI, NTU Singapore, and IIT Hyderabad, and publications in federated learning at workshops associated with IEEE INFOCOM 2025 and AAAI 2025\.$/);
-  expect(hero.getByText('frontier model training, optimization, and robot learning')).toBeVisible();
+  expect(researchAreas.closest('p')).toHaveTextContent(/^My research spans federated learning, machine unlearning, multimodal AI, NLP, and 2D & 3D computer vision, with experience at Sarvam AI, NTU Singapore, and IIT Hyderabad, and publications in federated learning at IEEE INFOCOM 2025 and AAAI 2025 workshops\.$/);
+  const interests = within(hero.getByRole('list', { name: 'Research interests' }));
+  expect(interests.queryByText('Frontier model training')).not.toBeInTheDocument();
+  expect(interests.getByText('Optimization')).toBeVisible();
+  expect(interests.getByText('Robot learning')).toBeVisible();
 });
 
 test('keeps the employment timeline in Experience instead of the introduction', () => {
@@ -90,17 +98,207 @@ test('keeps the employment timeline in Experience instead of the introduction', 
   expect(experience.getByText('Oct 2026 - present', { selector: '.experience-period' })).toBeVisible();
 });
 
-test('provides the five contact and profile links below the introduction', () => {
+test('removes the research animation and keeps the intro scroll link and header navigation', () => {
+  render(<App />);
+  const hero = screen.getByRole('region', { name: 'My name is SWAPNIK' });
+  expect(within(hero).queryByRole('figure', { name: 'A conceptual research space' })).not.toBeInTheDocument();
+  expect(within(hero).queryByRole('button', { name: /hero animations/ })).not.toBeInTheDocument();
+  expect(hero.querySelector('.research-field')).not.toBeInTheDocument();
+  expect(hero.querySelector('.fourier-stage canvas')).toBeInTheDocument();
+  expect(within(hero).queryByRole('link', { name: /SCROLL TO EXPLORE/ })).not.toBeInTheDocument();
+  expect(within(hero).getByRole('link', { name: 'Scroll down to Research' })).toHaveAttribute('href', '#research');
+  expect(within(screen.getByRole('navigation', { name: 'Primary navigation' })).getByRole('link', { name: 'Research' })).toHaveAttribute('href', '#research');
+});
+
+test('hides the intro scroll cue after a small scroll and restores it near the top', () => {
+  const originalScrollY = window.scrollY;
+  try {
+    window.scrollY = 41;
+    const { container } = render(<App />);
+    const cue = container.querySelector('.hero-scroll-cue');
+    expect(screen.queryByRole('link', { name: 'Scroll down to Research' })).not.toBeInTheDocument();
+    expect(cue).toHaveAttribute('tabindex', '-1');
+    fireEvent.scroll(window, { target: { scrollY: 0 } });
+    expect(screen.getByRole('link', { name: 'Scroll down to Research' })).toBe(cue);
+    expect(cue).not.toHaveAttribute('tabindex');
+    fireEvent.scroll(window, { target: { scrollY: 40 } });
+    expect(screen.getByRole('link', { name: 'Scroll down to Research' })).toBe(cue);
+    fireEvent.scroll(window, { target: { scrollY: 41 } });
+    expect(screen.queryByRole('link', { name: 'Scroll down to Research' })).not.toBeInTheDocument();
+    expect(cue).toHaveAttribute('tabindex', '-1');
+  } finally {
+    window.scrollY = originalScrollY;
+  }
+});
+
+test('provides six contact and profile links below the portrait', () => {
   render(<App />);
   const links = within(screen.getByRole('group', { name: 'Contact and profile links' }));
-  expect(links.getAllByRole('link').map(link => link.textContent.trim())).toEqual(['Email', 'CV', 'Google Scholar', 'GitHub', 'LinkedIn']);
+  expect(links.getAllByRole('link').map(link => link.textContent.trim())).toEqual(['Email', 'Resume', 'Google Scholar', 'GitHub', 'LinkedIn', 'Medium']);
   expect(links.getByRole('link', { name: 'Email' })).toHaveAttribute('href', 'mailto:swapnikvarala@gmail.com');
-  const cv = links.getByRole('link', { name: 'CV' });
+  const cv = links.getByRole('link', { name: 'Resume' });
   expect(cv).toHaveAttribute('href', '/media/Swapnik%20Resume.pdf');
   expect(cv).toHaveAttribute('target', '_blank');
   expect(links.getByRole('link', { name: 'Google Scholar' })).toHaveAttribute('href', 'https://scholar.google.com/citations?user=qTU92b8AAAAJ&hl=en');
   expect(links.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/swapnik-iitkgp');
   expect(links.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute('href', 'https://www.linkedin.com/in/swapnik-varala/');
+  const medium = links.getByRole('link', { name: 'Medium' });
+  expect(medium).toHaveAttribute('href', 'https://medium.com/@swapnikvarala');
+  expect(medium).toHaveAttribute('target', '_blank');
+  expect(medium).toHaveAttribute('rel', 'noopener noreferrer');
+  expect(links.getByRole('link', { name: 'Email' }).closest('.hero-art')).not.toBeNull();
+  expect(screen.getByRole('heading', { name: 'Research interests', exact: true }).closest('.hero-copy')).not.toBeNull();
+});
+
+test('keeps the intro cue and section selector mutually exclusive while synchronizing navigation', () => {
+  const originalScrollY = window.scrollY;
+  try {
+    window.scrollY = 0;
+    render(<App />);
+    expect(screen.queryByRole('navigation', { name: 'Section selector' })).not.toBeInTheDocument();
+    const header = within(screen.getByRole('navigation', { name: 'Primary navigation' }));
+    userEvent.click(header.getByRole('link', { name: 'Research' }));
+    expect(screen.getByRole('link', { name: 'Scroll down to Research' })).toBeVisible();
+    expect(screen.queryByRole('navigation', { name: 'Section selector' })).not.toBeInTheDocument();
+    fireEvent.scroll(window, { target: { scrollY: 41 } });
+    expect(screen.queryByRole('link', { name: 'Scroll down to Research' })).not.toBeInTheDocument();
+    const selector = within(screen.getByRole('navigation', { name: 'Section selector' }));
+    expect(selector.getAllByRole('link').map(link => link.getAttribute('href'))).toEqual([
+      '#research', '#projects', '#publications', '#experience', '#about',
+    ]);
+    expect(selector.getByRole('link', { name: 'Go to Research' })).toHaveAttribute('aria-current', 'location');
+    userEvent.click(selector.getByRole('link', { name: 'Go to Work' }));
+    expect(selector.getByRole('link', { name: 'Go to Work' })).toHaveAttribute('aria-current', 'location');
+    expect(selector.getByRole('link', { name: 'Go to Research' })).not.toHaveAttribute('aria-current');
+    expect(header.getByRole('link', { name: 'Work' })).toHaveAttribute('aria-current', 'location');
+    fireEvent.scroll(window, { target: { scrollY: 0 } });
+    expect(screen.getByRole('link', { name: 'Scroll down to Research' })).toBeVisible();
+    expect(screen.queryByRole('navigation', { name: 'Section selector' })).not.toBeInTheDocument();
+    fireEvent.scroll(window, { target: { scrollY: 41 } });
+    userEvent.click(screen.getByRole('link', { name: 'The Curious Neuron' }));
+    expect(screen.queryByRole('navigation', { name: 'Section selector' })).not.toBeInTheDocument();
+  } finally {
+    window.scrollY = originalScrollY;
+  }
+});
+
+test('updates the section selector using viewport height and rebuilds its observer on resize', () => {
+  const originalObserver = window.IntersectionObserver;
+  const originalHeight = window.innerHeight;
+  const originalWidth = window.innerWidth;
+  const originalScrollY = window.scrollY;
+  const observer = { observe: jest.fn(), disconnect: jest.fn() };
+  let notify;
+  window.IntersectionObserver = jest.fn(callback => {
+    notify = callback;
+    return observer;
+  });
+  try {
+    window.innerWidth = 1600;
+    window.innerHeight = 800;
+    const { unmount } = render(<App />);
+    expect(screen.queryByRole('navigation', { name: 'Section selector' })).not.toBeInTheDocument();
+    expect(window.IntersectionObserver).toHaveBeenLastCalledWith(expect.any(Function), {
+      rootMargin: '-120px 0px -520px 0px',
+    });
+    expect(observer.observe.mock.calls.map(([section]) => section.id)).toEqual([
+      'home', 'research', 'projects', 'publications', 'experience', 'about',
+    ]);
+    fireEvent.scroll(window, { target: { scrollY: 41 } });
+    act(() => notify([{ target: document.getElementById('research'), isIntersecting: true }]));
+    const selector = within(screen.getByRole('navigation', { name: 'Section selector' }));
+    expect(selector.getByRole('link', { name: 'Go to Research' })).toHaveAttribute('aria-current', 'location');
+    const header = within(screen.getByRole('navigation', { name: 'Primary navigation' }));
+    expect(header.getByRole('link', { name: 'Research' })).toHaveAttribute('aria-current', 'location');
+    act(() => notify([{ target: document.getElementById('about'), isIntersecting: true }]));
+    expect(selector.getByRole('link', { name: 'Go to Toolbox' })).toHaveAttribute('aria-current', 'location');
+    expect(selector.getByRole('link', { name: 'Go to Research' })).not.toHaveAttribute('aria-current');
+    act(() => notify([{ target: document.getElementById('home'), isIntersecting: true }]));
+    expect(screen.queryByRole('navigation', { name: 'Section selector' })).not.toBeInTheDocument();
+    window.innerHeight = 600;
+    fireEvent.resize(window);
+    expect(window.IntersectionObserver).toHaveBeenLastCalledWith(expect.any(Function), {
+      rootMargin: '-90px 0px -390px 0px',
+    });
+    expect(observer.disconnect).toHaveBeenCalledTimes(1);
+    unmount();
+    expect(observer.disconnect).toHaveBeenCalledTimes(2);
+  } finally {
+    window.innerHeight = originalHeight;
+    window.innerWidth = originalWidth;
+    window.scrollY = originalScrollY;
+    if (originalObserver) window.IntersectionObserver = originalObserver;
+    else delete window.IntersectionObserver;
+  }
+});
+
+test('keeps footer metadata with a direct email link and no duplicate navigation', () => {
+  render(<App />);
+  const footer = within(screen.getByRole('contentinfo'));
+  expect(footer.getByText(/^© \d{4} Varala Nandu Swapnik$/)).toBeVisible();
+  expect(footer.getByText(/Last updated/)).toBeVisible();
+  expect(footer.getByText(/Last updated/).querySelector('time')).toHaveTextContent(/^[A-Z][a-z]{2} \d{4}$/);
+  expect(footer.getAllByRole('link')).toHaveLength(1);
+  expect(footer.getByRole('link', { name: 'Get in touch' })).toHaveAttribute('href', 'mailto:swapnikvarala@gmail.com');
+});
+
+test('removes the repeated biography and education while retaining the toolbox', () => {
+  render(<App />);
+  expect(screen.queryByRole('heading', { name: /An engineer by training/ })).not.toBeInTheDocument();
+  expect(screen.queryByText('THE PERSON BEHIND THE WORK.')).not.toBeInTheDocument();
+  expect(screen.queryByText('Selected coursework')).not.toBeInTheDocument();
+  expect(screen.queryByText('Earlier education')).not.toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'The toolbox' })).toBeVisible();
+});
+
+test('runs and resets the gradient descent tutorial and returns focus when closed', () => {
+  window.history.replaceState(null, '', '/explorations/');
+  render(<App />);
+  const trigger = screen.getByRole('button', { name: 'Try the tutorial' });
+  userEvent.click(trigger);
+  const demo = within(screen.getByRole('region', { name: 'Tutorials demo' }));
+  expect(demo.getByRole('status', { name: 'Gradient descent progress' })).toHaveTextContent('Step 0 · x = 3.000 · loss = 9.000');
+  userEvent.click(demo.getByRole('button', { name: 'Take a step' }));
+  expect(demo.getByRole('status', { name: 'Gradient descent progress' })).toHaveTextContent('Step 1 · x = 2.100 · loss = 4.410');
+  fireEvent.change(demo.getByRole('slider', { name: /Learning rate/ }), { target: { value: '0.5' } });
+  userEvent.click(demo.getByRole('button', { name: 'Take a step' }));
+  expect(demo.getByRole('status', { name: 'Gradient descent progress' })).toHaveTextContent('Step 2 · x = 0.000 · loss = 0.000');
+  userEvent.click(demo.getByRole('button', { name: 'Reset' }));
+  expect(demo.getByRole('status', { name: 'Gradient descent progress' })).toHaveTextContent('Step 0 · x = 3.000 · loss = 9.000');
+  userEvent.click(demo.getByRole('button', { name: 'Close exploration' }));
+  expect(screen.queryByRole('region', { name: 'Tutorials demo' })).not.toBeInTheDocument();
+  expect(trigger).toHaveFocus();
+});
+
+test('opens all exploration samples and keeps animation opt-in', () => {
+  window.history.replaceState(null, '', '/explorations/');
+  render(<App />);
+  userEvent.click(screen.getByRole('button', { name: 'Explore the idea' }));
+  expect(screen.getByRole('heading', { name: 'What if an agent had a memory budget?' })).toBeVisible();
+  userEvent.click(screen.getByRole('button', { name: 'Read the demo post' }));
+  expect(screen.queryByRole('region', { name: 'Ideas demo' })).not.toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'Why small experiments matter.' })).toBeVisible();
+  userEvent.click(screen.getByRole('button', { name: 'Open the animation' }));
+  expect(screen.getByRole('button', { name: 'Play orbit' })).toHaveAttribute('aria-pressed', 'false');
+  userEvent.click(screen.getByRole('button', { name: 'Play orbit' }));
+  expect(screen.getByRole('button', { name: 'Pause orbit' })).toHaveAttribute('aria-pressed', 'true');
+  userEvent.click(screen.getByRole('button', { name: 'Close exploration' }));
+  userEvent.click(screen.getByRole('button', { name: 'Open the animation' }));
+  expect(screen.getByRole('button', { name: 'Play orbit' })).toHaveAttribute('aria-pressed', 'false');
+});
+
+test('loads Explorations as a separate page with links back to portfolio sections', () => {
+  window.history.replaceState(null, '', '/explorations/');
+  render(<App />);
+  expect(screen.getByRole('heading', { level: 1, name: 'A space for curiosity.' })).toBeVisible();
+  expect(screen.queryByRole('navigation', { name: 'Section selector' })).not.toBeInTheDocument();
+  expect(screen.queryByRole('heading', { name: 'My name is SWAPNIK' })).not.toBeInTheDocument();
+  expect(screen.queryByRole('heading', { name: 'The toolbox' })).not.toBeInTheDocument();
+  expect(screen.getByRole('link', { name: 'Back to portfolio' })).toHaveAttribute('href', '/#home');
+  const nav = within(screen.getByRole('navigation', { name: 'Primary navigation' }));
+  expect(nav.getByRole('link', { name: 'Work' })).toHaveAttribute('href', '/#projects');
+  expect(nav.getByRole('link', { name: 'Explorations' })).toHaveAttribute('aria-current', 'page');
+  expect(document.title).toBe('Explorations | Swapnik Varala');
 });
 
 test('removes legacy hero actions and the header Resume link while keeping work navigation', () => {
@@ -163,8 +361,13 @@ test('links The Curious Neuron to the top and keeps About out of navigation', ()
   const homeLink = within(screen.getByRole('banner')).getByRole('link', { name: 'The Curious Neuron' });
   const navigation = within(screen.getByRole('navigation', { name: 'Primary navigation' }));
   expect(homeLink).toHaveAttribute('href', '#home');
+  expect(homeLink.querySelector('svg')).not.toBeInTheDocument();
   expect(screen.queryByRole('link', { name: 'Welcome' })).not.toBeInTheDocument();
   expect(navigation.queryByRole('link', { name: 'About' })).not.toBeInTheDocument();
+  expect(navigation.queryByRole('link', { name: 'Contact' })).not.toBeInTheDocument();
+  expect(navigation.getByRole('link', { name: 'Explorations' })).toHaveAttribute('href', '/explorations/');
+  expect(container.querySelector('#contact')).not.toBeInTheDocument();
+  expect(container.querySelector('#explorations')).not.toBeInTheDocument();
   expect(container.querySelector('#about')).toBeInTheDocument();
 
   userEvent.click(navigation.getByRole('link', { name: 'Research' }));
